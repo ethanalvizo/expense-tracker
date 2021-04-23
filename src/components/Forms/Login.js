@@ -7,6 +7,8 @@ import {
     makeStyles 
 }  from '@material-ui/core';
 
+import fire from '../../config/fire';
+
 const Login = () => {
     const [values, setValues] = useState({
         email: '',
@@ -22,8 +24,12 @@ const Login = () => {
         console.log(values)
     }
 
-    const handleSignIn = async () => {  
-        console.log(values, "signing in")
+    const handleSignIn = async (e) => {  
+        e.preventDefault()
+        fire.auth().signInWithEmailAndPassword(values.email, values.password)
+        .catch((error) => {
+            setErrorMessage(error.message)
+        })
     }
 
     return (
@@ -47,6 +53,9 @@ const Login = () => {
                     <Grid item>
                         <h2>Login</h2>
                     </Grid>
+                    {errorMessage && <Grid>
+                        <h5>{errorMessage}</h5>
+                    </Grid>}
                     <Grid item style={{width: "100%"}}>
                         <TextField 
                             name="email"
