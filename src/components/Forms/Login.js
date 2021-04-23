@@ -6,6 +6,7 @@ import {
     Button,
     makeStyles 
 }  from '@material-ui/core';
+import { Alert } from '@material-ui/lab'
 
 import fire from '../../config/fire';
 
@@ -21,15 +22,15 @@ const Login = () => {
             ...values,
             [e.target.name]: e.target.value
         })
-        console.log(values)
     }
 
     const handleSignIn = async (e) => {  
         e.preventDefault()
+        setErrorMessage('')
         fire.auth().signInWithEmailAndPassword(values.email, values.password)
         .catch((error) => {
-            setErrorMessage(error.message)
-        })
+           setErrorMessage('Failed to sign in')
+        });
     }
 
     return (
@@ -54,7 +55,7 @@ const Login = () => {
                         <h2>Login</h2>
                     </Grid>
                     {errorMessage && <Grid>
-                        <h5>{errorMessage}</h5>
+                        <Alert severity="error">{errorMessage}</Alert>
                     </Grid>}
                     <Grid item style={{width: "100%"}}>
                         <TextField 
