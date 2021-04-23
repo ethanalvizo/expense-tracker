@@ -29,6 +29,7 @@ const Login = () => {
         setErrorMessage('')
         fire.auth().signInWithEmailAndPassword(values.email, values.password)
         .catch((error) => {
+            // to access the error message use error.message
            setErrorMessage('Failed to sign in')
         });
     }
