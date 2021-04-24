@@ -1,11 +1,11 @@
 import React from 'react'
+import Transaction from './Transaction';
 
-const Dashboard = () => {
+export default function Dashboard() {
     return (
         <div>
-            Welcome to the dashboard
+            <Transaction />
         </div>
     )
 }
 
-export default Dashboard
