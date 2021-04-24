@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import db from '../../config/fire';
 
-import { Card } from 'react-bootstrap'
+import { 
+    Card,
+    Badge
+} from 'react-bootstrap'
 import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator'
 
 const DataFeed = () => {
-    const [expenses, setExpenses] = useState();
-    const [amount, setAmount] = useState(0);
+    const [expenses, setExpenses] = useState([]); //expenses is similar to data variable but without the id
+    const [amount, setAmount] = useState({
+        expenses: 0,
+        income: 0
+    });
     const [data, setData] = useState([]);
     const { currentUser } = useAuth();
 
@@ -16,15 +23,24 @@ const DataFeed = () => {
         expenseRef.on('value', (items) => {
             const expenses = items.val();
 
-            let expenseList = [];
-            let sum = 0
+            let expenseList = [], expenseSum = 0, incomeSum = 0
             for (let id in expenses) {
                 expenseList.push(expenses[id])
-                sum += expenses[id].amount
+                if(expenses[id].type === 'Expense'){
+                    expenseSum += expenses[id].amount
+                }
+                else {
+                    incomeSum += expenses[id].amount
+                }
             }
-            sum = sum.toFixed(2);
 
-            setAmount(sum)
+            expenseSum = expenseSum.toFixed(2);
+            incomeSum = incomeSum.toFixed(2);
+
+            setAmount({
+                expenses: expenseSum,
+                income: incomeSum
+            })
             setExpenses(expenseList);
 
             setData([])
@@ -70,8 +86,15 @@ const DataFeed = () => {
     return (
         <>
             <Card className="border-0 shadow">
-                Total Sum {amount}
-                <BootstrapTable keyField='id' data={data} columns={columns} />
+                <Card.Body>
+                    <h3 className="text-center mb-4 p-2 bg-light">Recent Expenses</h3>
+                    <div className="row d-flex justify-content-around">
+                        <h5>Monthly Expenses <Badge variant="light">{amount.expenses}</Badge></h5>
+                        <h5>Monthly Income <Badge variant="light">{amount.income}</Badge></h5>
+                    </div>
+                    <BootstrapTable bootstrap4 keyField='id' data={data} columns={columns} pagination={paginationFactory()} />
+                </Card.Body>
+                
             </Card>
 
         </>

@@ -73,13 +73,16 @@ export default function Transaction() {
             amount: parseFloat(amountRef.current.value),
             date: date.full
         })
+
+        //resets form after submission
+        e.target.reset()
     }
 
     return (
         <>
             <Card className="border-0 shadow ">
                 <Card.Body>
-                    <h3 className="text-center mb-4 bg-light">Add Transaction</h3>
+                    <h3 className="text-center mb-4 p-2 bg-light">Add Transaction</h3>
                     {/* {error && <Alert variant="danger">{error}</Alert>} */}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group id="email">
@@ -123,8 +126,8 @@ export default function Transaction() {
                             </ButtonGroup>
                         </Form.Group>
                         <div className="d-flex justify-content-between">
-                            <Button className="w-25 bg-light border-0 text-dark shadow-sm" type="reset">Cancel</Button>
-                            <Button className="w-50 shadow-sm" type="submit">Add</Button>
+                            <Button className="bg-light border-0 text-dark shadow-sm" style={{width: '40%'}} type="reset">Cancel</Button>
+                            <Button className=" shadow-sm" style={{width: '40%'}} type="submit">Add</Button>
                         </div>
                     </Form>
                 </Card.Body>

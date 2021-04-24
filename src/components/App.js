@@ -13,7 +13,7 @@ import {
 
 function App() {
     return (
-      <Container className="d-flex align-items-center justify-content-center" style={{minHeight: '100vh', minWidth: '100vw'}}>
+      <Container className="d-flex align-items-center justify-content-center" style={{minHeight: '100vh', minWidth: '100vw', backgroundColor: '#f0f0f0'}}>
         <div className="w-100">
             <AuthProvider>
               <Switch>
