@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import {
     Card,
@@ -31,15 +31,15 @@ const DataFeed = ({expenses, amount}) => {
     }
 
     ];
-    
+
     return (
         <>
             <Card className="border-0 shadow">
                 <Card.Body>
                     <h3 className="text-center mb-4 p-2 bg-light">Recent Expenses</h3>
                     <div className="row d-flex justify-content-around">
-                        {amount && <h5>Monthly Expenses <Badge variant="light">{amount.expenses}</Badge></h5>}
-                        {amount && <h5>Monthly Income <Badge variant="light">{amount.income}</Badge></h5>}
+                        {(amount.expenses !== '0') && <h5>Monthly Expenses <Badge variant="light">{amount.expenses}</Badge></h5>}
+                        {(amount.income !== '0') && <h5>Monthly Income <Badge variant="light">{amount.income}</Badge></h5>}
                     </div>
                     <BootstrapTable bootstrap4 keyField='id' data={expenses} columns={columns} pagination={paginationFactory()} />
                 </Card.Body>

@@ -8,7 +8,6 @@ import {
     Button,
     ButtonGroup,
     ToggleButton,
-    Alert
 } from 'react-bootstrap';
 
 export default function Transaction() {

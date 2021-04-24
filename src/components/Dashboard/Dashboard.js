@@ -7,7 +7,7 @@ import DataFeed from './DataFeed';
 import Trends from './Trends';
 
 const Dashboard = () => {
-    const [expenses, setExpenses] = useState([]); //expenses is similar to data variable but without the id
+    const [expenses, setExpenses] = useState([]);
     const [amount, setAmount] = useState({
         expenses: 0,
         income: 0
@@ -21,7 +21,7 @@ const Dashboard = () => {
 
             let expenseList = [], expenseSum = 0, incomeSum = 0
             for (let id in expenses) {
-                expenseList.push({key: id, ...expenses[id]})
+                expenseList.push({id: id, ...expenses[id]})
                 if (expenses[id].type === 'Expense') {
                     expenseSum += expenses[id].amount
                 }
@@ -54,7 +54,7 @@ const Dashboard = () => {
             <hr className="mx-3"></hr>
             <div className="row my-5">
                 <div className="col-7 mx-auto">
-                    <Trends />
+                    <Trends expenses={expenses} />
                 </div>
                 <div className="col-5 mx-auto my-auto" style={{ maxWidth: '600px' }}>
 
