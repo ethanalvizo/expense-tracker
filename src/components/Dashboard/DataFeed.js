@@ -57,7 +57,7 @@ const DataFeed = () => {
                 ])
             }
         })
-    }, []);
+    }, [currentUser.uid]);
 
     const columns = [{
         dataField: 'name',
