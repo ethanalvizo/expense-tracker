@@ -8,9 +8,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 const DataFeed = () => {
     const [expenses, setExpenses] = useState();
     const [amount, setAmount] = useState(0);
-    const [data, setData] = useState([{
-
-    }]);
+    const [data, setData] = useState([]);
     const { currentUser } = useAuth();
 
     useEffect(() => {
@@ -28,34 +26,54 @@ const DataFeed = () => {
 
             setAmount(sum)
             setExpenses(expenseList);
-        })
 
-        for (let index in expenses){
-            let temp = data;
-            console.log('temp', temp)
-            const newObj = {
-                    'id': index, 
-                    'name': expenses[index].name,
-                    'amount': expenses[index].amount,
-                    'category': expenses[index].category,
-                    'type': expenses[index].type,
-                    'date': expenses[index].date 
-                
+            setData([])
+            for (let index in expenses){
+                setData( prevState => [
+                    ...prevState, {
+                        'id': index,
+                        'name': expenses[index].name,
+                        'amount': expenses[index].amount,
+                        'category': expenses[index].category,
+                        'type': expenses[index].type,
+                        'date': expenses[index].date
+                    }
+                ])
             }
-            temp.push(newObj);
-            setData(temp);
-        }
+        })
+    }, []);
 
-        console.log()
-    }, [])
+    const columns = [{
+        dataField: 'name',
+        text: 'Name',
+        sort: true
+    }, {
+        dataField: 'amount',
+        text: 'Amount',
+        sort: true
+    }, {
+        dataField: 'category',
+        text: 'Category',
+        sort: true
+    }, {
+        dataField: 'type',
+        text: 'Type',
+        sort: true
+    }, {
+        dataField: 'date',
+        text: 'Date',
+        sort: true
+    }
+
+    ];
 
     return (
         <>
-        <Card>
-            Total Sum {amount}
-            {/* <BootstrapTable keyField='id' data={} columns={columns} /> */}
-        </Card>
-            
+            <Card className="border-0 shadow">
+                Total Sum {amount}
+                <BootstrapTable keyField='id' data={data} columns={columns} />
+            </Card>
+
         </>
     )
 }
