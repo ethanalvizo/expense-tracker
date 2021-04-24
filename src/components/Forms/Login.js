@@ -34,8 +34,8 @@ export default function Login() {
     }
 
     return (
-        <div style={{ maxWidth: '400px'}}>
-            <Card>
+        <div>
+            <Card className="mx-auto" style={{ maxWidth: '400px'}}>
                 <Card.Body>
                     <h2 className="text-center mb-4">Log In</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
