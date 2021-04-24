@@ -20,7 +20,7 @@ export default function Login() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        
+
         try {
             setError("")
             setLoading(true)
@@ -34,7 +34,7 @@ export default function Login() {
     }
 
     return (
-        <>
+        <div style={{ maxWidth: '400px'}}>
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Log In</h2>
@@ -60,6 +60,6 @@ export default function Login() {
             <div className="w-100 text-center mt-2">
                 Need an account? <Link to="/signup">Sign Up</Link>
             </div>
-        </>
+        </div>
     )
 }

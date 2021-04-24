@@ -13,8 +13,8 @@ import {
 
 function App() {
     return (
-      <Container className="d-flex align-items-center justify-content-center" style={{minHeight: '100vh'}}>
-        <div className="w-100" style={{ maxWidth: '400px'}}>
+      <Container className="d-flex align-items-center justify-content-center" style={{minHeight: '100vh', minWidth: '100vw'}}>
+        <div className="w-100">
             <AuthProvider>
               <Switch>
                 <PrivateRoute exact path="/" component={Dashboard} />

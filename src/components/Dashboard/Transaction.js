@@ -77,7 +77,7 @@ export default function Transaction() {
 
     return (
         <>
-            <Card className="border-0 shadow">
+            <Card className="border-0 shadow ">
                 <Card.Body>
                     <h3 className="text-center mb-4 bg-light">Add Transaction</h3>
                     {/* {error && <Alert variant="danger">{error}</Alert>} */}
