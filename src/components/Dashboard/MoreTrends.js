@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import {
   Chart,
-  BarSeries,
+  PieSeries,
   Title,
-  ArgumentAxis,
-  ValueAxis,
 } from '@devexpress/dx-react-chart-bootstrap4';
+// import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
 import { Animation } from '@devexpress/dx-react-chart';
 
-const Trends = ({ expenses }) => {
+const MoreTrends = ({ expenses }) => {
+  // const data = [
+  //   { country: 'Russia', area: 12 },
+  //   { country: 'Canada', area: 7 },
+  //   { country: 'USA', area: 7 },
+  //   { country: 'China', area: 7 },
+  //   { country: 'Brazil', area: 6 },
+  //   { country: 'Australia', area: 5 },
+  //   { country: 'India', area: 2 },
+  //   { country: 'Others', area: 54 },
+  // ];
+  // const [chartData, setChartData] = useState(data);
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
@@ -21,7 +31,7 @@ const Trends = ({ expenses }) => {
           temp[position].amount = newSum;
         }
         else {
-          temp.push({ category: expenses[index].category, amount: expenses[index].amount})
+          temp.push({ category: expenses[index].category, amount: expenses[index].amount })
         }
       }
       setChartData(temp)
@@ -33,18 +43,19 @@ const Trends = ({ expenses }) => {
       <Chart
         data={chartData}
       >
-        <ArgumentAxis />
-        <ValueAxis max={500} />
-
-        <BarSeries
+        <PieSeries
           valueField="amount"
           argumentField="category"
         />
-        <Title text="Expenses for April" style={{color: '#f8f9fa'}}/>
+        <Title
+          text="Expenses for April"
+        />
         <Animation />
       </Chart>
     </div> : null
   )
 }
 
-export default Trends
+export default MoreTrends
+
+

@@ -7,7 +7,7 @@ import {
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator'
 
-const DataFeed = ({expenses, amount}) => {
+const DataFeed = ({expenses, income, amount}) => {
     const columns = [{
         dataField: 'name',
         text: 'Name',

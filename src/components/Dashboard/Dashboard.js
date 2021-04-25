@@ -5,9 +5,11 @@ import db from '../../config/fire';
 import Transaction from './Transaction';
 import DataFeed from './DataFeed';
 import Trends from './Trends';
+import MoreTrends from './MoreTrends';
 
 const Dashboard = () => {
     const [expenses, setExpenses] = useState([]);
+    const [income, setIncome] = useState([]);
     const [amount, setAmount] = useState({
         expenses: 0,
         income: 0
@@ -19,13 +21,14 @@ const Dashboard = () => {
         expenseRef.on('value', (items) => {
             const expenses = items.val();
 
-            let expenseList = [], expenseSum = 0, incomeSum = 0
+            let expenseList = [], incomeList = [], expenseSum = 0, incomeSum = 0
             for (let id in expenses) {
-                expenseList.push({id: id, ...expenses[id]})
                 if (expenses[id].type === 'Expense') {
+                    expenseList.push({id: id, ...expenses[id]})
                     expenseSum += expenses[id].amount
                 }
                 else {
+                    incomeList.push({id: id, ...expenses[id]})
                     incomeSum += expenses[id].amount
                 }
             }
@@ -38,6 +41,7 @@ const Dashboard = () => {
                 income: incomeSum
             })
             setExpenses(expenseList);
+            setIncome(incomeList);
         })
     }, [currentUser.uid]);
 
@@ -45,7 +49,7 @@ const Dashboard = () => {
         <>
             <div className="row my-5">
                 <div className="col-7 mx-auto">
-                    <DataFeed expenses={expenses} amount={amount}/>
+                    <DataFeed expenses={expenses} income={income} amount={amount}/>
                 </div>
                 <div className="col-5 mx-auto my-auto" style={{ maxWidth: '600px' }}>
                     <Transaction />
@@ -57,7 +61,7 @@ const Dashboard = () => {
                     <Trends expenses={expenses} />
                 </div>
                 <div className="col-5 mx-auto my-auto" style={{ maxWidth: '600px' }}>
-
+                    <MoreTrends expenses={expenses} amount={amount}/>
                 </div>
             </div>
         </>
