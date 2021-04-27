@@ -2,6 +2,7 @@ import React from 'react';
 import Login from './Forms/Login';
 import Signup from './Forms/Signup';
 import Dashboard from './Dashboard/Dashboard';
+import Profile from './Profile';
 
 import { AuthProvider } from '../contexts/AuthContext';
 import { BrowserRouter as Switch, Route } from 'react-router-dom';
@@ -18,7 +19,7 @@ function App() {
             <AuthProvider>
               <Switch>
                 <PrivateRoute exact path="/" component={Dashboard} />
-                {/* <PrivateRoute path="/update-profile" component={UpdateProfile} /> */}
+                <PrivateRoute path="/profile" component={Profile} />
                 <Route path="/signup" component={Signup} />
                 <Route path="/login" component={Login} />
                 {/* <Route path="/forgot-password" component={ForgotPassword} /> */}

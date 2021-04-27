@@ -6,6 +6,7 @@ import Transaction from './Transaction';
 import DataFeed from './DataFeed';
 import Trends from './Trends';
 import MoreTrends from './MoreTrends';
+import TopBar from './TopBar';
 
 const Dashboard = () => {
     const [expenses, setExpenses] = useState([]);
@@ -47,6 +48,9 @@ const Dashboard = () => {
 
     return (
         <>
+            <div className="row w-100">
+                <TopBar />
+            </div>
             <div className="row my-5">
                 <div className="col-7 mx-auto">
                     <DataFeed expenses={expenses} income={income} amount={amount}/>

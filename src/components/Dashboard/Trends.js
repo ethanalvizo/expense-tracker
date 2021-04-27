@@ -40,7 +40,7 @@ const Trends = ({ expenses }) => {
           valueField="amount"
           argumentField="category"
         />
-        <Title text="Expenses for April" style={{color: '#f8f9fa'}}/>
+        <Title text="Expenses for April" />
         <Animation />
       </Chart>
     </div> : null
