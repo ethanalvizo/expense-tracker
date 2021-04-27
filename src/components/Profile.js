@@ -4,10 +4,11 @@ import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
 export default function Profile() {
+    const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { currentUser, updatePassword, updateEmail } = useAuth();
+    const { currentUser, updatePassword, updateEmail, updateDisplayName } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory()
@@ -22,6 +23,9 @@ export default function Profile() {
         const promises = []
         setLoading(true)
         setError("")
+        if(nameRef.current.value !== currentUser.displayName) {
+            promises.push(updateDisplayName(nameRef.current.value))
+        }
         if(emailRef.current.value !== currentUser.email) {
             promises.push(updateEmail(emailRef.current.value))
         }
@@ -47,6 +51,8 @@ export default function Profile() {
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
                     <Form.Group id="email">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control type="text" ref={nameRef} required defaultValue={currentUser.displayName} placeholder={currentUser.displayName ? currentUser.displayName : 'Enter first name...'}/>
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" ref={emailRef} required defaultValue={currentUser.email}/>
                         <Form.Label>Password</Form.Label>

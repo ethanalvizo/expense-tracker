@@ -26,9 +26,12 @@ const TopBar = () => {
   return (
     <Navbar fixed="top" bg="light" variant="light" className="w-100">
       <Navbar.Brand href="/"><i class="fas fa-money-bill-wave"></i>Expense Tracker</Navbar.Brand>
-      <Nav className="mr-auto">
+      <Nav className={currentUser.displayName ? "" : 'mr-auto'}>
         <Link to="profile" className="text-dark">Profile</Link>
       </Nav>
+      {currentUser.displayName && <Nav className="mx-auto">
+        Hi, {currentUser.displayName}
+      </Nav>}
       <Nav>
         <Nav.Link onClick={handleLogout} >Logout</Nav.Link>
       </Nav>
