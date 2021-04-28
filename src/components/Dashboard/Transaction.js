@@ -10,7 +10,7 @@ import {
     ToggleButton,
 } from 'react-bootstrap';
 
-export default function Transaction() {
+export default function Transaction({ handleClose }) {
     const nameRef = useRef();
     const amountRef = useRef();
     const categoryRef = useRef();
@@ -75,6 +75,7 @@ export default function Transaction() {
 
         //resets form after submission
         e.target.reset()
+        handleClose();
     }
 
     return (
@@ -124,7 +125,7 @@ export default function Transaction() {
                             </ButtonGroup>
                         </Form.Group>
                         <div className="d-flex justify-content-between">
-                            <Button className="bg-light border-0 text-dark shadow-sm" style={{width: '40%'}} type="reset">Cancel</Button>
+                            <Button className="bg-light border-0 text-dark shadow-sm" style={{width: '40%'}} type="reset" onClick={handleClose}>Cancel</Button>
                             <Button className=" shadow-sm" style={{width: '40%'}} type="submit">Add</Button>
                         </div>
                     </Form>

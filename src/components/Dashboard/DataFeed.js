@@ -59,14 +59,14 @@ const DataFeed = ({ expenses, income, amount }) => {
                     <Modal.Title>Add Transaction</Modal.Title>
                 </Modal.Header>
                 <Modal.Body><Transaction handleClose={handleClose} /></Modal.Body>
-                <Modal.Footer>
+                {/* <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleClose}>
                         Save Changes
                     </Button>
-                </Modal.Footer>
+                </Modal.Footer> */}
             </Modal>
 
         </>

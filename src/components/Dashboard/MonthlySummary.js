@@ -18,7 +18,7 @@ const MonthlySummary = ({ amount }) => {
                         Welcome to your personal finance dashboard.
                     </p>
                     {!currentUser.displayName && <p>
-                        <Button className="btn-lg" variant="primary">Learn more</Button>
+                        <Button className="btn-lg" variant="primary">Add Display Name</Button>
                     </p>}
                 </div>
                 <div className="d-flex flex-column justify-content-center px-3 ">
