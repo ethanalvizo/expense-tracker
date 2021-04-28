@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useHistory } from 'react-router-dom'
 
 import {
     Jumbotron,
@@ -8,6 +9,11 @@ import {
 
 const MonthlySummary = ({ amount }) => {
     const { currentUser } = useAuth();
+    const history = useHistory()
+
+    const handleClick = () => {
+        history.pushState('/profile')
+    }
 
     return (
         <Jumbotron fluid style={{ backgroundColor: '#f0f0f0', minWidth: '100%'}}>
@@ -18,7 +24,7 @@ const MonthlySummary = ({ amount }) => {
                         Welcome to your personal finance dashboard.
                     </p>
                     {!currentUser.displayName && <p>
-                        <Button className="btn-lg" variant="primary">Add Display Name</Button>
+                        <Button className="btn-lg" variant="primary" onClick={handleClick}>Add Display Name</Button>
                     </p>}
                 </div>
                 <div className="d-flex flex-column justify-content-center px-3 ">

@@ -124,6 +124,7 @@ export default function Transaction({ handleClose }) {
                                 ))}
                             </ButtonGroup>
                         </Form.Group>
+                        <hr />
                         <div className="d-flex justify-content-between">
                             <Button className="bg-light border-0 text-dark shadow-sm" style={{width: '40%'}} type="reset" onClick={handleClose}>Cancel</Button>
                             <Button className=" shadow-sm" style={{width: '40%'}} type="submit">Add</Button>

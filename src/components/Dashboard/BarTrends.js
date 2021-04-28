@@ -40,7 +40,7 @@ const Trends = ({ expenses }) => {
         <BarSeries
           valueField="amount"
           argumentField="category"
-          color="#23AFEC"
+          color="#767676"
         />
         <Title text="Expenses for April" />
         <Animation />
