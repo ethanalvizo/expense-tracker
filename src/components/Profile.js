@@ -29,7 +29,7 @@ export default function Profile() {
         if(emailRef.current.value !== currentUser.email) {
             promises.push(updateEmail(emailRef.current.value))
         }
-        if(passwordRef.current.value) {
+        if(passwordRef.current.value && passwordConfirmRef.current.value) {
             promises.push(updatePassword(passwordRef.current.value))
         }
         

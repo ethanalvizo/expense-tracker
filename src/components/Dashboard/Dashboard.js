@@ -4,9 +4,10 @@ import db from '../../config/fire';
 
 import Transaction from './Transaction';
 import DataFeed from './DataFeed';
-import Trends from './Trends';
-import MoreTrends from './MoreTrends';
+import Trends from './BarTrends';
+import MoreTrends from './PieTrends';
 import TopBar from './TopBar';
+import MonthlySummary from './MonthlySummary';
 
 const Dashboard = () => {
     const [expenses, setExpenses] = useState([]);
@@ -48,16 +49,15 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className="row w-100">
+            <div>
                 <TopBar />
             </div>
-            <div className="row my-5">
-                <div className="col-7 mx-auto">
-                    <DataFeed expenses={expenses} income={income} amount={amount}/>
-                </div>
-                <div className="col-5 mx-auto my-auto" style={{ maxWidth: '600px' }}>
-                    <Transaction />
-                </div>
+            <hr className="mt-0 mb-4"/>
+            <div className="row mt-4 mx-5">
+                <MonthlySummary amount={amount} />
+            </div>
+            <div className="row my-5 mx-5">
+                <DataFeed expenses={expenses} income={income} amount={amount}/>
             </div>
             <hr className="mx-3"></hr>
             <div className="row my-5">

@@ -79,9 +79,8 @@ export default function Transaction() {
 
     return (
         <>
-            <Card className="border-0 shadow ">
+            <Card className="border-0 ">
                 <Card.Body>
-                    <h3 className="text-center mb-4 p-2 bg-light">Add Transaction</h3>
                     {/* {error && <Alert variant="danger">{error}</Alert>} */}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group id="email">

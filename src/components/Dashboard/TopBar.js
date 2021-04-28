@@ -24,15 +24,12 @@ const TopBar = () => {
   }
 
   return (
-    <Navbar fixed="top" bg="light" variant="light" className="w-100">
+    <Navbar bg="" variant="light" className="w-100 justify-content-between">
+      <span className="d-inline-flex">
       <Navbar.Brand href="/"><i class="fas fa-money-bill-wave"></i>Expense Tracker</Navbar.Brand>
-      <Nav className={currentUser.displayName ? "" : 'mr-auto'}>
-        <Link to="profile" className="text-dark">Profile</Link>
-      </Nav>
-      {currentUser.displayName && <Nav className="mx-auto">
-        Hi, {currentUser.displayName}
-      </Nav>}
+      </span>
       <Nav>
+        <Link to="profile" className="text-secondary my-auto">Profile</Link>
         <Nav.Link onClick={handleLogout} >Logout</Nav.Link>
       </Nav>
 

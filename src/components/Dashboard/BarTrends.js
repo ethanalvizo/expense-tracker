@@ -13,18 +13,18 @@ const Trends = ({ expenses }) => {
 
   useEffect(() => {
     if (expenses.length !== 0) {
-      let temp = [];
+      let newData = [];
       for (let index in expenses) {
-        if (temp.some(expense => expense.category === expenses[index].category)) {
-          let position = temp.findIndex((item) => item.category === expenses[index].category);
-          let newSum = temp[position].amount + expenses[index].amount;
-          temp[position].amount = newSum;
+        if (newData.some(expense => expense.category === expenses[index].category)) {
+          let position = newData.findIndex((item) => item.category === expenses[index].category);
+          let newSum = newData[position].amount + expenses[index].amount;
+          newData[position].amount = newSum;
         }
         else {
-          temp.push({ category: expenses[index].category, amount: expenses[index].amount})
+          newData.push({ category: expenses[index].category, amount: expenses[index].amount})
         }
       }
-      setChartData(temp)
+      setChartData(newData)
     }
   }, [expenses])
 
@@ -32,9 +32,10 @@ const Trends = ({ expenses }) => {
     (expenses.length !== 0) ? <div className="card">
       <Chart
         data={chartData}
+        rotated={true}
       >
         <ArgumentAxis />
-        <ValueAxis max={500} />
+        <ValueAxis max={1000} />
 
         <BarSeries
           valueField="amount"

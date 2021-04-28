@@ -3,6 +3,7 @@ import {
   Chart,
   PieSeries,
   Title,
+  Legend,
 } from '@devexpress/dx-react-chart-bootstrap4';
 // import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
 import { Animation } from '@devexpress/dx-react-chart';
@@ -12,18 +13,18 @@ const MoreTrends = ({ expenses }) => {
 
   useEffect(() => {
     if (expenses.length !== 0) {
-      let temp = [];
+      let newData = [];
       for (let index in expenses) {
-        if (temp.some(expense => expense.category === expenses[index].category)) {
-          let position = temp.findIndex((item) => item.category === expenses[index].category);
-          let newSum = temp[position].amount + expenses[index].amount;
-          temp[position].amount = newSum;
+        if (newData.some(expense => expense.category === expenses[index].category)) {
+          let position = newData.findIndex((item) => item.category === expenses[index].category);
+          let newSum = newData[position].amount + expenses[index].amount;
+          newData[position].amount = newSum;
         }
         else {
-          temp.push({ category: expenses[index].category, amount: expenses[index].amount })
+          newData.push({ name: expenses[index].category, category: expenses[index].category, amount: expenses[index].amount })
         }
       }
-      setChartData(temp)
+      setChartData(newData)
     }
   }, [expenses])
 
@@ -35,7 +36,14 @@ const MoreTrends = ({ expenses }) => {
         <PieSeries
           valueField="amount"
           argumentField="category"
+          
         />
+        <Legend
+          position="bottom"
+          label="text"
+
+        />
+
         <Title
           text="Expenses for April"
         />

@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Transaction from './Transaction';
 
 import {
     Card,
-    Badge
+    Modal,
+    Button
 } from 'react-bootstrap'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator'
 
-const DataFeed = ({expenses, income, amount}) => {
+const DataFeed = ({ expenses, income, amount }) => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const columns = [{
         dataField: 'name',
         text: 'Name',
@@ -34,17 +41,33 @@ const DataFeed = ({expenses, income, amount}) => {
 
     return (
         <>
-            <Card className="border-0 shadow">
-                <Card.Body>
-                    <h3 className="text-center mb-4 p-2 bg-light">Recent Expenses</h3>
-                    <div className="row d-flex justify-content-around">
-                        {(amount.expenses !== '0') && <h5>Monthly Expenses <Badge variant="light">{amount.expenses}</Badge></h5>}
-                        {(amount.income !== '0') && <h5>Monthly Income <Badge variant="light">{amount.income}</Badge></h5>}
+            <Card className="border-0 shadow min-vh-50">
+                <Card.Header as="h3">
+                    <div className="row justify-content-between px-3">
+                        <div>Recent Payments</div>
+                        <Button variant="outline-success" onClick={handleShow} >Add Transaction</Button>
                     </div>
+                </Card.Header>
+                <Card.Body>
+
                     <BootstrapTable bootstrap4 keyField='id' data={expenses} columns={columns} pagination={paginationFactory()} />
                 </Card.Body>
 
             </Card>
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Transaction</Modal.Title>
+                </Modal.Header>
+                <Modal.Body><Transaction handleClose={handleClose} /></Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </>
     )
