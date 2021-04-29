@@ -10,13 +10,14 @@ import {
     ToggleButton,
 } from 'react-bootstrap';
 
-export default function Transaction({ handleClose }) {
+export default function Transaction({ handleClose, category }) {
     const nameRef = useRef();
     const amountRef = useRef();
     const categoryRef = useRef();
     const newCategoryRef = useRef();
     const [newCategory, setNewCategory] = useState('');
     const { currentUser } = useAuth();
+    console.log(category)
 
     const [radioValue, setRadioValue] = useState({ name: 'Expense', value: '1' });
     const radios = [
@@ -64,15 +65,22 @@ export default function Transaction({ handleClose }) {
 
     let date = formatDateString(JSON.stringify(new Date()));
 
+    let expenseCategories = category.expenses;
+    expenseCategories = expenseCategories.map((item) => <option>{item.category}</option>)
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}`).push({
-            name: nameRef.current.value,
-            type: radioValue.name,
-            category: categoryRef.current.value,
-            amount: parseFloat(amountRef.current.value),
-            date: date.full
+        // db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}`).push({
+        //     name: nameRef.current.value,
+        //     type: radioValue.name,
+        //     category: categoryRef.current.value,
+        //     amount: parseFloat(amountRef.current.value),
+        //     date: date.full
+        // })
+
+        db.database().ref(`Settings/${currentUser.uid}/Categories/${radioValue.name}`).push({
+            category: newCategoryRef.current.value
         })
 
         //resets form after submission
@@ -80,9 +88,9 @@ export default function Transaction({ handleClose }) {
         handleClose();
     }
 
-    useEffect(() => {
-        console.log(newCategory)
-    }, [newCategory])
+    // useEffect(() => {
+    //     console.log(newCategory)
+    // }, [newCategory])
 
     return (
         <>
@@ -98,17 +106,15 @@ export default function Transaction({ handleClose }) {
                             <Form.Label>Category</Form.Label>
                             {radioValue.value === '1' ?
                                 <Form.Control as="select" ref={categoryRef} onChange={(e) => setNewCategory(e.target.value)} required>
-                                    <option>Food and Dining</option>
-                                    <option>Groceries</option>
-                                    <option>Rent and Housing</option>
-                                    <option>Personal Development</option>
+                                    {expenseCategories}
                                     <option>Add New Category</option>
                                 </Form.Control>
                                 :
-                                <Form.Control as="select" ref={categoryRef} required>
+                                <Form.Control as="select" ref={categoryRef} onChange={(e) => setNewCategory(e.target.value)} required>
                                     <option>Job</option>
                                     <option>Side Business</option>
                                     <option>Investment</option>
+                                    <option>Add New Category</option>
                                 </Form.Control>
 
                             }

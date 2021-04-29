@@ -9,7 +9,7 @@ import {
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator'
 
-const DataFeed = ({ expenses, income, amount }) => {
+const DataFeed = ({ expenses, income, amount, category }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -58,7 +58,7 @@ const DataFeed = ({ expenses, income, amount }) => {
                 <Modal.Header closeButton>
                     <Modal.Title>Add Transaction</Modal.Title>
                 </Modal.Header>
-                <Modal.Body><Transaction handleClose={handleClose} /></Modal.Body>
+                <Modal.Body><Transaction handleClose={handleClose} category={category} /></Modal.Body>
                 {/* <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close

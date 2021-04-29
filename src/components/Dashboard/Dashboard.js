@@ -12,6 +12,10 @@ import MonthlySummary from './MonthlySummary';
 const Dashboard = () => {
     const [expenses, setExpenses] = useState([]);
     const [income, setIncome] = useState([]);
+    const [category, setCategory] = useState({
+        expenses: [],
+        deposit: []
+    });
     const [amount, setAmount] = useState({
         expenses: 0,
         income: 0
@@ -45,6 +49,32 @@ const Dashboard = () => {
             setExpenses(expenseList);
             setIncome(incomeList);
         })
+
+        const expenseCategoryRef = db.database().ref(`Settings/${currentUser.uid}/Categories/Expense`);
+        expenseCategoryRef.on('value', (items) => {
+            const categories = items.val();
+
+            let categoryList = [];
+            for (let id in categories) {
+                categoryList.push({id: id, ...categories[id]})
+            }
+            setCategory({
+                expenses: categoryList
+            })
+        })
+
+        const depositCategoryRef = db.database().ref(`Settings/${currentUser.uid}/Categories/Deposit`);
+        depositCategoryRef.on('value', (items) => {
+            const categories = items.val();
+
+            let categoryList = [];
+            for (let id in categories) {
+                categoryList.push({id: id, ...categories[id]})
+            }
+            setCategory({
+                deposit: categoryList
+            })
+        })
     }, [currentUser.uid]);
 
     return (
@@ -57,7 +87,7 @@ const Dashboard = () => {
                 <MonthlySummary amount={amount} />
             </div>
             <div className="row my-5 mx-5">
-                <DataFeed expenses={expenses} income={income} amount={amount}/>
+                <DataFeed expenses={expenses} income={income} amount={amount} category={category}/>
             </div>
             <hr className="mx-3"></hr>
             <div className="row my-5">
