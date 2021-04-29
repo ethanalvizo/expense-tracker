@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import db from '../../config/fire';
 
@@ -14,6 +14,8 @@ export default function Transaction({ handleClose }) {
     const nameRef = useRef();
     const amountRef = useRef();
     const categoryRef = useRef();
+    const newCategoryRef = useRef();
+    const [newCategory, setNewCategory] = useState('');
     const { currentUser } = useAuth();
 
     const [radioValue, setRadioValue] = useState({ name: 'Expense', value: '1' });
@@ -78,6 +80,10 @@ export default function Transaction({ handleClose }) {
         handleClose();
     }
 
+    useEffect(() => {
+        console.log(newCategory)
+    }, [newCategory])
+
     return (
         <>
             <Card className="border-0 ">
@@ -91,11 +97,12 @@ export default function Transaction({ handleClose }) {
                             <Form.Control type="number" step="0.01" ref={amountRef} required />
                             <Form.Label>Category</Form.Label>
                             {radioValue.value === '1' ?
-                                <Form.Control as="select" ref={categoryRef} required>
+                                <Form.Control as="select" ref={categoryRef} onChange={(e) => setNewCategory(e.target.value)} required>
                                     <option>Food and Dining</option>
                                     <option>Groceries</option>
                                     <option>Rent and Housing</option>
                                     <option>Personal Development</option>
+                                    <option>Add New Category</option>
                                 </Form.Control>
                                 :
                                 <Form.Control as="select" ref={categoryRef} required>
@@ -105,6 +112,7 @@ export default function Transaction({ handleClose }) {
                                 </Form.Control>
 
                             }
+                            {newCategory == 'Add New Category' && <Form.Control type="text" placeholder="Enter new category..." className="mt-3" ref={newCategoryRef} />}
                             <ButtonGroup className="w-100 mt-4 mb-2" toggle>
                                 {radios.map((radio, idx) => (
                                     <ToggleButton
