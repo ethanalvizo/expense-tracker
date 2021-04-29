@@ -22,6 +22,14 @@ const Dashboard = () => {
     });
     const { currentUser } = useAuth();
 
+    const defaultExpenseCategories = [
+        'Food & Dining',
+        'Rent & Housing',
+        'Health & Hygiene',
+        'Transportation',
+        'Non-Essentials',
+    ]
+
     useEffect(() => {
         const expenseRef = db.database().ref(`Transactions/${currentUser.uid}/2021/April`);
         expenseRef.on('value', (items) => {
@@ -30,11 +38,11 @@ const Dashboard = () => {
             let expenseList = [], incomeList = [], expenseSum = 0, incomeSum = 0
             for (let id in expenses) {
                 if (expenses[id].type === 'Expense') {
-                    expenseList.push({id: id, ...expenses[id]})
+                    expenseList.push({ id: id, ...expenses[id] })
                     expenseSum += expenses[id].amount
                 }
                 else {
-                    incomeList.push({id: id, ...expenses[id]})
+                    incomeList.push({ id: id, ...expenses[id] })
                     incomeSum += expenses[id].amount
                 }
             }
@@ -53,16 +61,23 @@ const Dashboard = () => {
         const expenseCategoryRef = db.database().ref(`Settings/${currentUser.uid}/Categories/Expense`);
         expenseCategoryRef.on('value', (items) => {
             const categories = items.val();
-
-            let categoryList = [];
-            for (let id in categories) {
-                categoryList.push({id: id, ...categories[id]})
+            if (categories == null) {
+                for (let index in defaultExpenseCategories) {
+                    db.database().ref(`Settings/${currentUser.uid}/Categories/Expense`).push({
+                        category: defaultExpenseCategories[index]
+                    })
+                }
             }
-            console.log(categoryList, 'expense')
-            setCategory(prevState => ({
-                ...prevState,
-                expenses: categoryList,
-            }))
+            else {
+                let categoryList = [];
+                for (let id in categories) {
+                    categoryList.push({ id: id, ...categories[id] })
+                }
+                setCategory(prevState => ({
+                    ...prevState,
+                    expenses: categoryList,
+                }))
+            }
         })
 
         const depositCategoryRef = db.database().ref(`Settings/${currentUser.uid}/Categories/Deposit`);
@@ -71,13 +86,15 @@ const Dashboard = () => {
 
             let categoryList = [];
             for (let id in categories) {
-                categoryList.push({id: id, ...categories[id]})
+                categoryList.push({ id: id, ...categories[id] })
             }
             setCategory(prevState => ({
                 ...prevState,
                 deposit: categoryList
             }))
         })
+        console.log(expenseCategoryRef)
+        console.log(depositCategoryRef)
     }, [currentUser.uid]);
 
     return (
@@ -85,12 +102,12 @@ const Dashboard = () => {
             <div>
                 <TopBar />
             </div>
-            <hr className="mt-0 mb-4"/>
+            <hr className="mt-0 mb-4" />
             <div className="row mt-4 mx-5">
                 <MonthlySummary amount={amount} />
             </div>
             <div className="row my-5 mx-5">
-                <DataFeed expenses={expenses} income={income} amount={amount} category={category}/>
+                <DataFeed expenses={expenses} income={income} amount={amount} category={category} />
             </div>
             <hr className="mx-3"></hr>
             <div className="row my-5">
@@ -98,7 +115,7 @@ const Dashboard = () => {
                     <Trends expenses={expenses} />
                 </div>
                 <div className="col-5 mx-auto my-auto" style={{ maxWidth: '600px' }}>
-                    <MoreTrends expenses={expenses} amount={amount}/>
+                    <MoreTrends expenses={expenses} amount={amount} />
                 </div>
             </div>
         </>

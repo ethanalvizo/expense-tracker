@@ -17,7 +17,6 @@ export default function Transaction({ handleClose, category }) {
     const newCategoryRef = useRef();
     const [newCategory, setNewCategory] = useState('');
     const { currentUser } = useAuth();
-    console.log(category)
 
     const [radioValue, setRadioValue] = useState({ name: 'Expense', value: '1' });
     const radios = [
@@ -73,26 +72,24 @@ export default function Transaction({ handleClose, category }) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        // db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}`).push({
-        //     name: nameRef.current.value,
-        //     type: radioValue.name,
-        //     category: categoryRef.current.value,
-        //     amount: parseFloat(amountRef.current.value),
-        //     date: date.full
-        // })
-
-        db.database().ref(`Settings/${currentUser.uid}/Categories/${radioValue.name}`).push({
-            category: newCategoryRef.current.value
+        db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}`).push({
+            name: nameRef.current.value,
+            type: radioValue.name,
+            category: categoryRef.current.value,
+            amount: parseFloat(amountRef.current.value),
+            date: date.full
         })
+
+        if(newCategory === 'Add New Category') {
+            db.database().ref(`Settings/${currentUser.uid}/Categories/${radioValue.name}`).push({
+                category: newCategoryRef.current.value
+            })
+        }
 
         //resets form after submission
         e.target.reset()
         handleClose();
     }
-
-    // useEffect(() => {
-    //     console.log(newCategory)
-    // }, [newCategory])
 
     return (
         <>
@@ -118,7 +115,7 @@ export default function Transaction({ handleClose, category }) {
                                 </Form.Control>
 
                             }
-                            {newCategory == 'Add New Category' && <Form.Control type="text" placeholder="Enter new category..." className="mt-3" ref={newCategoryRef} />}
+                            {newCategory === 'Add New Category' && <Form.Control type="text" placeholder="Enter new category..." className="mt-3" ref={newCategoryRef} />}
                             <ButtonGroup className="w-100 mt-4 mb-2" toggle>
                                 {radios.map((radio, idx) => (
                                     <ToggleButton

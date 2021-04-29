@@ -12,7 +12,7 @@ const MonthlySummary = ({ amount }) => {
     const history = useHistory()
 
     const handleClick = () => {
-        history.pushState('/profile')
+        history.push('/profile')
     }
 
     return (
