@@ -67,6 +67,8 @@ export default function Transaction({ handleClose, category }) {
 
     let expenseCategories = category.expenses;
     expenseCategories = expenseCategories.map((item) => <option>{item.category}</option>)
+    let depositCategories = category.deposit;
+    depositCategories = depositCategories.map((item) => <option>{item.category}</option>)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -111,9 +113,7 @@ export default function Transaction({ handleClose, category }) {
                                 </Form.Control>
                                 :
                                 <Form.Control as="select" ref={categoryRef} onChange={(e) => setNewCategory(e.target.value)} required>
-                                    <option>Job</option>
-                                    <option>Side Business</option>
-                                    <option>Investment</option>
+                                    {depositCategories}
                                     <option>Add New Category</option>
                                 </Form.Control>
 

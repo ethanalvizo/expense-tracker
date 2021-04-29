@@ -58,9 +58,11 @@ const Dashboard = () => {
             for (let id in categories) {
                 categoryList.push({id: id, ...categories[id]})
             }
-            setCategory({
-                expenses: categoryList
-            })
+            console.log(categoryList, 'expense')
+            setCategory(prevState => ({
+                ...prevState,
+                expenses: categoryList,
+            }))
         })
 
         const depositCategoryRef = db.database().ref(`Settings/${currentUser.uid}/Categories/Deposit`);
@@ -71,9 +73,10 @@ const Dashboard = () => {
             for (let id in categories) {
                 categoryList.push({id: id, ...categories[id]})
             }
-            setCategory({
+            setCategory(prevState => ({
+                ...prevState,
                 deposit: categoryList
-            })
+            }))
         })
     }, [currentUser.uid]);
 
