@@ -31,6 +31,7 @@ const Dashboard = () => {
     ]
 
     useEffect(() => {
+        // gets all transactions and sums monthly finances
         const expenseRef = db.database().ref(`Transactions/${currentUser.uid}/2021/April`);
         expenseRef.on('value', (items) => {
             const expenses = items.val();
@@ -58,6 +59,7 @@ const Dashboard = () => {
             setIncome(incomeList);
         })
 
+        // gets expense categories
         const expenseCategoryRef = db.database().ref(`Settings/${currentUser.uid}/Categories/Expense`);
         expenseCategoryRef.on('value', (items) => {
             const categories = items.val();
@@ -80,6 +82,7 @@ const Dashboard = () => {
             }
         })
 
+        // gets deposit categories
         const depositCategoryRef = db.database().ref(`Settings/${currentUser.uid}/Categories/Deposit`);
         depositCategoryRef.on('value', (items) => {
             const categories = items.val();
@@ -93,8 +96,6 @@ const Dashboard = () => {
                 deposit: categoryList
             }))
         })
-        console.log(expenseCategoryRef)
-        console.log(depositCategoryRef)
     }, [currentUser.uid]);
 
     return (

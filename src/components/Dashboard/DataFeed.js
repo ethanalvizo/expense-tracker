@@ -15,14 +15,22 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 const DataFeed = ({ expenses, income, amount, category }) => {
     const [show, setShow] = useState(false);
     const { currentUser } = useAuth();
+    const [deleteTransactions, setDeleteTransations] = useState([]);
+    const [deleteOption, setDeleteOption] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleDelete = () => {
+        for (let index in deleteTransactions){
+            console.log('deleting', deleteTransactions[index])
+        }
+    }
+
     const columns = [{
         dataField: 'name',
         text: 'Name',
-        sort: true
+        sort: true,
     }, {
         dataField: 'amount',
         text: 'Amount',
@@ -39,10 +47,7 @@ const DataFeed = ({ expenses, income, amount, category }) => {
         dataField: 'date',
         text: 'Date',
         sort: true,
-        order: 'desc'
-    }
-
-    ];
+    }];
 
     return (
         <>
@@ -50,19 +55,23 @@ const DataFeed = ({ expenses, income, amount, category }) => {
                 <Card.Header as="h3">
                     <div className="row justify-content-between px-3">
                         <div>Recent Payments</div>
-                        <Button variant="outline-success" onClick={handleShow} >Add Transaction</Button>
+                        <span>
+                            {deleteOption && <Button variant="outline-danger" onClick={handleDelete} className="mr-3">Delete</Button>}
+                            <Button variant="outline-success" onClick={handleShow} >Add Transaction</Button>
+                        </span>
                     </div>
                 </Card.Header>
                 <Card.Body>
-                    <BootstrapTable 
-                        bootstrap4 
-                        keyField='id' 
-                        data={expenses} 
-                        columns={columns} 
-                        pagination={paginationFactory()} 
-                        cellEdit={ cellEditFactory({ 
+                    <BootstrapTable
+                        bootstrap4
+                        keyField='id'
+                        data={expenses}
+                        columns={columns}
+                        pagination={paginationFactory()}
+                        cellEdit={cellEditFactory({
                             mode: 'click',
                             afterSaveCell: (oldValue, newValue, row, column) => {
+                                console.log(`Changed ${oldValue} to ${newValue} in ${column.name}`)
                                 db.database().ref(`Transactions/${currentUser.uid}/2021/April/${row.id}`).set({
                                     amount: row.amount,
                                     category: row.category,
@@ -71,7 +80,23 @@ const DataFeed = ({ expenses, income, amount, category }) => {
                                     type: row.type
                                 })
                             }
-                        }) }
+                        })}
+                        selectRow={{
+                            mode: 'checkbox',
+                            clickToSelect: true,
+                            onSelect: (row) => {               
+                                if (deleteTransactions.includes(row.id)) {
+                                    let index = deleteTransactions.indexOf(row.id);
+                                    if (index > -1) {
+                                        deleteTransactions.splice(index, 1)
+                                    }
+                                }
+                                else {
+                                    deleteTransactions.push(row.id)
+                                }
+                                setDeleteOption(deleteTransactions.length !== 0)
+                            }
+                        }}
                     />
                 </Card.Body>
 
