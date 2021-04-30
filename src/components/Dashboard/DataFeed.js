@@ -15,15 +15,16 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 const DataFeed = ({ expenses, income, amount, category }) => {
     const [show, setShow] = useState(false);
     const { currentUser } = useAuth();
-    const [deleteTransactions, setDeleteTransations] = useState([]);
+    const [deleteTransactions, setDeleteTransactions] = useState([]);
     const [deleteOption, setDeleteOption] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         for (let index in deleteTransactions){
             console.log('deleting', deleteTransactions[index])
+            db.database().ref(`Transactions/${currentUser.uid}/2021/April/${deleteTransactions[index]}`).set(null)
         }
     }
 
