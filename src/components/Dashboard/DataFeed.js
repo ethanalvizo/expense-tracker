@@ -70,7 +70,7 @@ const DataFeed = ({ expenses, income, amount, category }) => {
                         columns={columns}
                         pagination={paginationFactory()}
                         cellEdit={cellEditFactory({
-                            mode: 'click',
+                            mode: 'dbclick',
                             afterSaveCell: (oldValue, newValue, row, column) => {
                                 console.log(`Changed ${oldValue} to ${newValue} in ${column.name}`)
                                 db.database().ref(`Transactions/${currentUser.uid}/2021/April/${row.id}`).set({
@@ -96,7 +96,9 @@ const DataFeed = ({ expenses, income, amount, category }) => {
                                     deleteTransactions.push(row.id)
                                 }
                                 setDeleteOption(deleteTransactions.length !== 0)
-                            }
+                            },
+                            clickToEdit: true,
+                            hideSelectAll: true
                         }}
                     />
                 </Card.Body>
