@@ -23,9 +23,9 @@ const DataFeed = ({ expenses, income, amount, category }) => {
 
     const handleDelete = async () => {
         for (let index in deleteTransactions){
-            console.log('deleting', deleteTransactions[index])
             db.database().ref(`Transactions/${currentUser.uid}/2021/April/${deleteTransactions[index]}`).set(null)
         }
+        setDeleteTransactions([])
     }
 
     const columns = [{
