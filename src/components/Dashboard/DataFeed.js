@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Transaction from './Transaction';
+import db from '../../config/fire';
+import { useAuth } from '../../contexts/AuthContext';
 
 import {
     Card,
@@ -7,10 +9,12 @@ import {
     Button
 } from 'react-bootstrap'
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator'
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import cellEditFactory from 'react-bootstrap-table2-editor';
 
 const DataFeed = ({ expenses, income, amount, category }) => {
     const [show, setShow] = useState(false);
+    const { currentUser } = useAuth();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -34,7 +38,8 @@ const DataFeed = ({ expenses, income, amount, category }) => {
     }, {
         dataField: 'date',
         text: 'Date',
-        sort: true
+        sort: true,
+        order: 'desc'
     }
 
     ];
@@ -49,8 +54,25 @@ const DataFeed = ({ expenses, income, amount, category }) => {
                     </div>
                 </Card.Header>
                 <Card.Body>
-
-                    <BootstrapTable bootstrap4 keyField='id' data={expenses} columns={columns} pagination={paginationFactory()} />
+                    <BootstrapTable 
+                        bootstrap4 
+                        keyField='id' 
+                        data={expenses} 
+                        columns={columns} 
+                        pagination={paginationFactory()} 
+                        cellEdit={ cellEditFactory({ 
+                            mode: 'click',
+                            afterSaveCell: (oldValue, newValue, row, column) => {
+                                db.database().ref(`Transactions/${currentUser.uid}/2021/April/${row.id}`).set({
+                                    amount: row.amount,
+                                    category: row.category,
+                                    date: row.date,
+                                    name: row.name,
+                                    type: row.type
+                                })
+                            }
+                        }) }
+                    />
                 </Card.Body>
 
             </Card>
@@ -58,7 +80,9 @@ const DataFeed = ({ expenses, income, amount, category }) => {
                 <Modal.Header closeButton>
                     <Modal.Title>Add Transaction</Modal.Title>
                 </Modal.Header>
-                <Modal.Body><Transaction handleClose={handleClose} category={category} /></Modal.Body>
+                <Modal.Body>
+                    <Transaction handleClose={handleClose} category={category} />
+                </Modal.Body>
                 {/* <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
