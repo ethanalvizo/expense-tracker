@@ -153,10 +153,10 @@ const Dashboard = () => {
             <hr className="mx-3"></hr>
             <div className="row my-5">
                 <div className="col-7 mx-auto">
-                    <Trends expenses={expenses} />
+                    <Trends expenses={expenses} date={date}/>
                 </div>
                 <div className="col-5 mx-auto my-auto" style={{ maxWidth: '600px' }}>
-                    <MoreTrends expenses={expenses} amount={amount} />
+                    <MoreTrends expenses={expenses} amount={amount} date={date}/>
                 </div>
             </div>
         </>

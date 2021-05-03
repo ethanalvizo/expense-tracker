@@ -8,7 +8,7 @@ import {
 // import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
 import { Animation } from '@devexpress/dx-react-chart';
 
-const MoreTrends = ({ expenses }) => {
+const MoreTrends = ({ expenses, date }) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const MoreTrends = ({ expenses }) => {
         />
 
         <Title
-          text="Expenses for April"
+          text={`Expenses for ${date.month}`}
         />
         <Animation />
       </Chart>

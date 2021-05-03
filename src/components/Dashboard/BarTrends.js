@@ -8,7 +8,7 @@ import {
 } from '@devexpress/dx-react-chart-bootstrap4';
 import { Animation } from '@devexpress/dx-react-chart';
 
-const Trends = ({ expenses }) => {
+const Trends = ({ expenses, date }) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Trends = ({ expenses }) => {
           argumentField="category"
           color="#767676"
         />
-        <Title text="Expenses for April" />
+        <Title text={`Expenses for ${date.month}`} />
         <Animation />
       </Chart>
     </div> : null
