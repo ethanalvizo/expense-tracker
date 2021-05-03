@@ -40,7 +40,7 @@ const Dashboard = () => {
             for (let id in expenses) {
                 if (expenses[id].type === 'Expense') {
                     expenseList.push({ id: id, ...expenses[id] })
-                    expenseSum += expenses[id].amount
+                    expenseSum += parseFloat(expenses[id].amount)
                 }
                 else {
                     incomeList.push({ id: id, ...expenses[id] })

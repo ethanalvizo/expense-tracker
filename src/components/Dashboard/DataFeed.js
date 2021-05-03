@@ -13,6 +13,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 
 const DataFeed = ({ expenses, income, amount, category }) => {
+    console.log(expenses)
     const [show, setShow] = useState(false);
     const { currentUser } = useAuth();
     const [deleteTransactions, setDeleteTransactions] = useState([]);
@@ -74,7 +75,7 @@ const DataFeed = ({ expenses, income, amount, category }) => {
                             afterSaveCell: (oldValue, newValue, row, column) => {
                                 console.log(`Changed ${oldValue} to ${newValue} in ${column.name}`)
                                 db.database().ref(`Transactions/${currentUser.uid}/2021/April/${row.id}`).set({
-                                    amount: row.amount,
+                                    amount: parseFloat(row.amount),
                                     category: row.category,
                                     date: row.date,
                                     name: row.name,
