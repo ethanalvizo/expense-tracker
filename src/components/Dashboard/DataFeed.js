@@ -12,7 +12,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 
-const DataFeed = ({ expenses, income, amount, category }) => {
+const DataFeed = ({ expenses, income, amount, category, date }) => {
     console.log(expenses)
     const [show, setShow] = useState(false);
     const { currentUser } = useAuth();
@@ -24,7 +24,7 @@ const DataFeed = ({ expenses, income, amount, category }) => {
 
     const handleDelete = async () => {
         for (let index in deleteTransactions){
-            db.database().ref(`Transactions/${currentUser.uid}/2021/April/${deleteTransactions[index]}`).set(null)
+            db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}/${deleteTransactions[index]}`).set(null)
         }
         setDeleteTransactions([])
     }
@@ -74,7 +74,7 @@ const DataFeed = ({ expenses, income, amount, category }) => {
                             mode: 'dbclick',
                             afterSaveCell: (oldValue, newValue, row, column) => {
                                 console.log(`Changed ${oldValue} to ${newValue} in ${column.name}`)
-                                db.database().ref(`Transactions/${currentUser.uid}/2021/April/${row.id}`).set({
+                                db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}/${row.id}`).set({
                                     amount: parseFloat(row.amount),
                                     category: row.category,
                                     date: row.date,
