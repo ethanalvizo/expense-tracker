@@ -19,7 +19,7 @@ const MonthlySummary = ({ amount }) => {
         <Jumbotron fluid style={{ backgroundColor: '#f0f0f0', minWidth: '100%'}}>
             <div className="row mx-2 justify-content-between">
                 <div>
-                    <h1 className="display-4">Hello, {currentUser.displayName}!</h1>
+                    <h1 className="display-4">Hello{currentUser.displayName && <span>, {currentUser.displayName}</span>}!</h1>
                     <p className="lead">
                         Welcome to your personal finance dashboard.
                     </p>

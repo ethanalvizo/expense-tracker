@@ -143,21 +143,21 @@ const Dashboard = () => {
             <div>
                 <TopBar />
             </div>
-            <hr className="mt-0 mb-4" />
-            <div className="row mt-4 mx-5">
+            <hr className="mt-0 mb-3" />
+            <div className="row mt-1 mx-5 mb-0">
                 <MonthlySummary amount={amount} />
             </div>
-            <div className="row my-5 mx-5">
-                <DataFeed expenses={expenses} income={income} amount={amount} category={category} date={date} />
-            </div>
-            <hr className="mx-3"></hr>
-            <div className="row my-5">
+            <div className="row mt-1 mb-5">
                 <div className="col-7 mx-auto">
                     <Trends expenses={expenses} date={date}/>
                 </div>
                 <div className="col-5 mx-auto my-auto" style={{ maxWidth: '600px' }}>
                     <MoreTrends expenses={expenses} amount={amount} date={date}/>
                 </div>
+            </div>
+            <hr className="mx-3"></hr>
+            <div className="row my-5 mx-5">
+                <DataFeed expenses={expenses} income={income} amount={amount} category={category} date={date} />
             </div>
         </>
     )

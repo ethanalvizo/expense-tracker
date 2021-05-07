@@ -72,17 +72,25 @@ export default function Transaction({ handleClose, category }) {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}`).push({
-            name: nameRef.current.value,
-            type: radioValue.name,
-            category: categoryRef.current.value,
-            amount: parseFloat(amountRef.current.value),
-            date: date.full
-        })
-
         if(newCategory === 'Add New Category') {
             db.database().ref(`Settings/${currentUser.uid}/Categories/${radioValue.name}`).push({
                 category: newCategoryRef.current.value
+            })
+            db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}`).push({
+                name: nameRef.current.value,
+                type: radioValue.name,
+                category: newCategoryRef.current.value,
+                amount: parseFloat(amountRef.current.value),
+                date: date.full
+            })
+        }
+        else {
+            db.database().ref(`Transactions/${currentUser.uid}/${date.year}/${date.month}`).push({
+                name: nameRef.current.value,
+                type: radioValue.name,
+                category: categoryRef.current.value,
+                amount: parseFloat(amountRef.current.value),
+                date: date.full
             })
         }
 
