@@ -147,7 +147,11 @@ const Dashboard = () => {
             <div className="row mt-1 mx-5 mb-0">
                 <MonthlySummary amount={amount} />
             </div>
-            <div className="row mt-1 mb-5">
+            <div className="row mt-0 mb-5 mx-5">
+                <DataFeed expenses={expenses} income={income} amount={amount} category={category} date={date} />
+            </div>
+            <hr className="mx-3"></hr>
+            <div className="row mt-5 mb-5">
                 <div className="col-7 mx-auto">
                     <Trends expenses={expenses} date={date}/>
                 </div>
