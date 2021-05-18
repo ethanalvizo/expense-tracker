@@ -159,10 +159,6 @@ const Dashboard = () => {
                     <MoreTrends expenses={expenses} amount={amount} date={date}/>
                 </div>
             </div>
-            <hr className="mx-3"></hr>
-            <div className="row my-5 mx-5">
-                <DataFeed expenses={expenses} income={income} amount={amount} category={category} date={date} />
-            </div>
         </>
     )
 }
